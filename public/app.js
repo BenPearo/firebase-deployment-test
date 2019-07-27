@@ -22,6 +22,9 @@ document.addEventListener("DOMContentLoaded", e => {
     // searching for item with predicate
     const query = productsRef.where('price', '>=', 10);
 
+    // order by price descending limit 5
+    // const query = productsRef.orderBy('price', 'desc').limit(5);
+
     query.get()
     .then(products => {
         products.forEach(doc => {
@@ -44,6 +47,23 @@ function googleLogin() {
     firebase.auth().signInWithPopup(provider)
     .then(result => {
         const user = result.user;
-        document.write(`Hello ${user.displayName}`);
+        console.log(`Hello ${user.displayName}`);
+    });
+}
+
+function uploadFile(files) {
+    const storageRef = firebase.storage().ref();
+    const file = files.item(0);
+    const horseRef = storageRef.child(`images/${file.name}`);
+
+
+    const task = horseRef.put(file);
+
+    task.then(snapshot => {
+        console.log(snapshot);
+        snapshot.ref.getDownloadURL()
+        .then(url => {
+            document.querySelector('#imgUpload').setAttribute('src', url);
+        });
     });
 }
