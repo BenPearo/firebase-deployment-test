@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", e => {
 
     const myPost = db.collection('posts').doc('firstpost');
 
+    // on myPost value changed
     myPost.onSnapshot(doc => {
 
             const data = doc.data();
@@ -18,6 +19,7 @@ document.addEventListener("DOMContentLoaded", e => {
 
     const productsRef = db.collection('products');
 
+    // searching for item with predicate
     const query = productsRef.where('price', '>=', 10);
 
     query.get()
