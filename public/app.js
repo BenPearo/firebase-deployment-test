@@ -11,10 +11,22 @@ document.addEventListener("DOMContentLoaded", e => {
             const data = doc.data();
 
             console.log(data);
-            document.write(data.title + `<br>`);
-            document.write(data.name);
+            console.log(data.title);
+            console.log(data.name);
 
         });
+
+    const productsRef = db.collection('products');
+
+    const query = productsRef.where('price', '>=', 10);
+
+    query.get()
+    .then(products => {
+        products.forEach(doc => {
+            data = doc.data();
+            console.log(`${data.name} at $${data.price}`);
+        });
+    });
 
 });
 
